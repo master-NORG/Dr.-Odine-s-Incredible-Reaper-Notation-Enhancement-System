@@ -135,7 +135,7 @@
 ]]></description>
       </metadata>
       <version name="1.0" author="DR_ODINE" time="2025-08-29T07:04:18Z">
-        <source type="data" file="DR_ODINE_Maps/ArticMaps.ini">https://github.com/master-NORG/Dr.-Odine-s-Incredible-Reaper-Notation-Enhancement-System/raw/8ed5d8eddf3ea5dcd50d8a907a332ce589ef20d5/Scripts/DR_ODINE/ArticMaps.ini</source>
+        <source type="data" file="DR_ODINE Maps/ArticMaps.ini">https://github.com/master-NORG/Dr.-Odine-s-Incredible-Reaper-Notation-Enhancement-System/raw/8ed5d8eddf3ea5dcd50d8a907a332ce589ef20d5/Scripts/DR_ODINE/ArticMaps.ini</source>
         <source main="main">https://github.com/master-NORG/Dr.-Odine-s-Incredible-Reaper-Notation-Enhancement-System/raw/8ed5d8eddf3ea5dcd50d8a907a332ce589ef20d5/Scripts/DR_ODINE/DR_ODINE_Loader.lua</source>
       </version>
     </reapack>

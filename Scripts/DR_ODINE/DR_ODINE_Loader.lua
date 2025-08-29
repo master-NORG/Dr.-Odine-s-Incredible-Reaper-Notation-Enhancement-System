@@ -2,7 +2,7 @@
 -- @author DR_ODINE
 -- @version 1.0
 -- @provides
---   [data] ArticMaps.ini > DR_ODINE_Maps/
+--   [data] ArticMaps.ini > DR_ODINE Maps/
 --   [main] DR_ODINE_Loader.lua
 -- @about
 --   # DR_ODINE Loader
