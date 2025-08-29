@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" commit="8ed5d8eddf3ea5dcd50d8a907a332ce589ef20d5" name="DR_ODINE">
+<index version="1" commit="8ed5d8eddf3ea5dcd50d8a907a332ce589ef20d5" name="DR_ODINE Notation Enhancement v1.0">
   <category name="Effects/DR_ODINE">
     <reapack name="DR_ODINE_Key Switch (gmem).jsfx" type="effect" desc="DR_ODINE_Key Switch (gmem) - mapped/unmapped + map title UI">
       <metadata>
