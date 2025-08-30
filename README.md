@@ -1,4 +1,4 @@
-# DR_ODINE's Notation Enhancement System v1.0
+# Dr. Odine's Incredible Notation Enhancement System v1.0
 
 ## Overview
 
@@ -8,10 +8,10 @@ Dr. Odine's Notation Enhancement is both an orchestral template system for REAPE
 
 - REAPER 6.0 or later
 - ReaPack package manager for automated installation
-- SWS (I have modified a script by cfillion which uses a corresponding .jsfx in the SWS cfillion collection, so this is required for a slightly streamline note replace function)
-- Please also install and utilize the Global Startup Action Tool by Amely_Suncroll to automatically run all the DR_ODINE background scripts at application launch [https://forum.cockos.com/showthread.php?t=294133](https://forum.cockos.com/showthread.php?t=294133)
+- SWS (I have modified a script by cfillion which uses a corresponding .jsfx in the SWS cfillion collection, so this is required for a slightly streamlined note replace function)
+- Please also install and utilize the [Global Startup Action Tool](https://forum.cockos.com/showthread.php?t=294133) by Amely_Suncroll to automatically run all the DR_ODINE background scripts at application launch
 
-After installing DR_ODINE Notation Enhancement v1.0 via ReaPack please watch my video where I demo the system and explain how to get everything setup. You will also need to spend a bit of time inputting your mapping preferences in the ArticMaps.ini folder located in the REAPER/Data/DR_ODINE Maps/ folder. However, once you have configured everything properly, you will have a streamlined workflow that doesn't need to be re-configured again unless you add new mapping to new VSTi instruments later.
+After installing DR_ODINE Notation Enhancement v1.0 via ReaPack please watch my video where I demo the system and explain how to get everything setup. You will also need to spend a bit of time inputting your mapping preferences in the ArticMaps.ini file located in the REAPER/Data/DR_ODINE Maps/ folder. However, once you have configured everything properly, you will have a streamlined workflow that doesn't need to be re-configured again unless you add new mapping to new VSTi instruments later.
 
 
 ## Core Components
