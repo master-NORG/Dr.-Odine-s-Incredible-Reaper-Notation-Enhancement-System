@@ -2,7 +2,7 @@
 
 ### Overview
 
-<small>This package is a comprehensive system for REAPER that streamlines the application of articulation, dynamics, ornaments, and any other notation markings to tracks, and then automatically translates them to track MIDI items. All without the user ever having to leave the Notation Editor! Users can set up pre-defined mapping so that notation markings will always translate to the correct MIDI commands based on what preset and VSTi is selected for that track.
+<small>This package is a comprehensive system for REAPER that streamlines the application of articulation, dynamics, ornaments, and any other notation markings to tracks, and then automatically translates them to track MIDI items. ***All without the user ever having to leave the Notation Editor!*** Users will configure their articulation mapping in a .ini file, and then notation markings will always translate to the correct MIDI commands based on what preset and VSTi is selected for that track.
 
 Simply (1) choose a reaper preset for the VSTi of your choice (Kontakt, Spitfire, Halion, etc.), and then (2) add your notation markings in the Notation Editor, and then (3) run the action which applies the notation to all midi items on the current track based on pre-configured maps for your VSTi.
 
