@@ -2,9 +2,11 @@
 
 ### Overview
 
-<small>This package is a comprehensive system for REAPER that streamlines the application of articulation, dynamics, ornaments, and any other notation markings to tracks, and then automatically translates them to MIDI commands and note playback without the user having to leave the Notation Editor. Users can set up pre-defined mapping so that notation markings will always translate to the correct MIDI commands based on what preset and VSTi is selected for that track. Simply choose your orchestral presets, regardless of the VSTi of your choice (Kontakt, Spitfire, Halion, etc.), and add your notation markings, and then run the action which applies the notation to all midi items on the current track.
+<small>This package is a comprehensive system for REAPER that streamlines the application of articulation, dynamics, ornaments, and any other notation markings to tracks, and then automatically translates them to track MIDI items. All without the user ever having to leave the Notation Editor! Users can set up pre-defined mapping so that notation markings will always translate to the correct MIDI commands based on what preset and VSTi is selected for that track.
 
-This system is an alternative to Rearticulate for composers who prefer working in the **Notation Editor** rather than being constantly stuck in the MIDI piano roll. The inspiration for this project came from spending time learning and enjoying using Dorico, and then wishing I could have some of that same functionality and workflow in Reaper.</small>
+Simply (1) choose a reaper preset for the VSTi of your choice (Kontakt, Spitfire, Halion, etc.), and then (2) add your notation markings, and then (3) run the action which applies the notation to all midi items on the current track.
+
+This system is an alternative to the Rearticulate extension. Dr.Odine's Notation Enhancement System is for composers who prefer working in the **Notation Editor** rather than being constantly stuck in the MIDI piano roll. The inspiration for this project came from spending time learning and enjoying using Dorico, and then wishing I could have some of that same functionality and workflow of my favorite DAW: Reaper!</small>
 
 
 <img src="./img/dr-odine%201.png" alt="Dr Odine" width="40%"> <img src="./img/dr%20odine%202.png" alt="Dr Odine 2" width="39%">
