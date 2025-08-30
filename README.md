@@ -1,12 +1,22 @@
-# Dr. Odine's Incredible Notation Enhancement System v1.0
+## Dr. Odine's Incredible Notation Enhancement System v1.0
 
-## Overview
+### Overview
 
 <img src="./img/dr-odine%201.png" alt="Dr Odine" width="40%"> <img src="./img/dr%20odine%202.png" alt="Dr Odine 2" width="39%">
 
 <img src="./img/dr%20odine%203.jpg" alt="Dr Odine" width="70%">
 
-- **Store your articulation maps in the provided ArticMaps.ini file.**
+- Store and configure your articulation maps in the provided **ArticMaps.ini** file:
+
+<img src="./img/maps2.jpg" alt="maps2" width="40%"> <img src="./img/maps1.jpg" alt="maps1" width="40%">
+
+- Run the following background scripts on startup using Amely_Suncroll's [Global Startup Action Tool](https://forum.cockos.com/showthread.php?t=294133):
+
+<img src="./img/startup.jpg" alt="startup" width="40%">
+
+- Add the DR_ODINE_ArticMaps PC --> KS (gmem)' and the DR_ODINE_Note Shortener jsfx plugins to each track fx chain before your VSTi. You can set this to the default chain to avoid having to do this everytime:
+
+<img src="./img/jsfx.jpg" alt="startup" width="40%">
 
 
 
