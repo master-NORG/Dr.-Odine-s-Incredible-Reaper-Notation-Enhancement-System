@@ -2,9 +2,9 @@
 
 ### Overview
 
-<small>This package is a comprehensive system for REAPER that streamlines the application of articulation, dynamics, ornaments, and any other notation markings to tracks, and then automatically translates them to track MIDI items. ***All without the user ever having to leave the Notation Editor!*** Users will configure their articulation mapping in a .ini file, and then notation markings will always translate to the correct MIDI commands based on what preset and VSTi is selected for that track.
+<small>This package is a comprehensive system for REAPER that streamlines the application of articulation, dynamics, ornaments, and any other notation markings to tracks, and then automatically translates them to track MIDI items. ***All without the user ever having to leave the Notation Editor!*** Users will configure their articulation mapping in an .ini file, and then notation markings will always translate to the correct MIDI commands based on what preset and VSTi is selected for that track.
 
-Simply (1) choose a reaper preset for the VSTi of your choice (Kontakt, Spitfire, Halion, etc.), and then (2) add your notation markings in the Notation Editor, and then (3) run the action which applies the notation to all midi items on the current track based on pre-configured maps for your VSTi.
+After installing DR_ODINE via Reapack and setting everything up, from that point forward there are only 3 steps in this workflow. Simply (1) choose a reaper preset for the VSTi of your choice (Kontakt, Spitfire, Halion, etc.), and then (2) add your notation markings in the Notation Editor to your notes, and then (3) run the action which applies the notation to all midi items on the current track based on pre-configured maps for your VSTi.
 
 This system is an alternative to the Rearticulate extension. Dr.Odine's Notation Enhancement System is for composers who prefer working in the **Notation Editor** rather than being constantly stuck in the MIDI piano roll. No need to mess with MIDI CC automations, velocity settings, or note triggers for sampler modes--just let Dr. Odine handle all of that for you in the background :)
 
@@ -28,21 +28,21 @@ Add the DR_ODINE_ArticMaps PC --> KS (gmem)' and the DR_ODINE_Note Shortener .js
 <img src="./img/jsfx.jpg" alt="startup" width="40%">
 
 
-This package also includes some scripts that simply make the process of composing the notation editor more streamlined:
+This package also includes some scripts that make the process of composing in the notation editor more streamlined:
 
 - Includes an action that toggles between displaying notation for all tracks, and the track that was either last selected, or set as the input track for midi events (step-input).
-- Action to dot currently seleted notes
+- Action to **dot** currently seleted notes
 - Selecting a note or notes will move the playback cursor to that position
 - Intelligent automatic track arming --> if all tracks are selected while in the notation editor, only the track that is selected for step-input will be armed
 - Included a modified version of cfillion's step-sequencer replace note script
 
-But wait, there's more!
+***But wait, there's more!***
 
 - I have created a new preset browser since this system relies on creating reaper presets. You can assign a key to the new browser which allows you to select other presets for the currently selected track's VSTi without having to opent the FX Browser
 
 - Staccato and Marcato articulation can now be applied to any VSTi note playback even if it hasn't been configured in the map file.
 - Dynamics, accents, cres/dimi will be applied to note velocity to any MIDI item, even if it hasn't been configured in the map file.
-- There is an included alternate delete action which will automatically move the playback cursor to where the notes began, (you'll see in the demo video why this is very useful!)
+- There is an included alternate delete action which will automatically move the playback cursor to where the notes began (you'll see in the demo video why this is very useful!)
 
 
 ## Installation Requirements
@@ -52,7 +52,7 @@ But wait, there's more!
 - SWS (I have modified a script by cfillion which uses a corresponding .jsfx in the SWS cfillion collection, so this is required for a slightly streamlined note replace function)
 - Please also install and utilize the [Global Startup Action Tool](https://forum.cockos.com/showthread.php?t=294133) by Amely_Suncroll to automatically run all the DR_ODINE background scripts at application launch
 
-After installing DR_ODINE Notation Enhancement v1.0 via ReaPack please watch my video where I demo the system and explain how to get everything setup. You will also need to spend a bit of time inputting your mapping preferences in the ArticMaps.ini file located in the REAPER/Data/DR_ODINE Maps/ folder. However, once you have configured everything properly, you will have a streamlined workflow that doesn't need to be re-configured again unless you add new mapping to new VSTi instruments later.
+After installing DR_ODINE Notation Enhancement v1.0 via ReaPack please watch my video where I demo the system and explain how to get everything setup. You will also need to spend a bit of time inputting your mapping preferences in the ArticMaps.ini file located in the REAPER/Data/DR_ODINE Maps/ folder. And then you will need to create reaper presets to contain the various presets you are using in your VSTi. However, once you have configured everything properly, you will have a streamlined workflow that doesn't need to be re-configured again unless you want to make changes later.
 
 
 ## Core Components
