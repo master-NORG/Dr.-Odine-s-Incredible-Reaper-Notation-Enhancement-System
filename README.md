@@ -1,16 +1,9 @@
-## Dr. Odine's Incredible Notation Enhancement System v1.0
+## Dr. Odine's Incredible Notation Enhancement System v1.0 <img src="./img/odine.jpg" alt="Odine" width="20%">
 
 ### Overview
 
-<span style="font-size: 8px;">This package is a comprehensive orchestral template system for REAPER that automates articulation switching and dynamics processing without having to leave the Notation Editor. It helps bridge the gap between musical notation software workflow and DAW-based orchestral composition by providing intelligent mapping between notation events (articulation, dynamics, etc.) and MIDI commands. This system is an alternative to Rearticulate for composers who prefer working in the Notation Editor rather than being constantly stuck in the MIDI piano roll. The inspiration for this project came from spending time learning and enjoying using Dorico, and then wishing I could have some of that same functionality and workflow in Reaper's notation editor.</span>
+<small>This package is a comprehensive orchestral template system for REAPER that automates articulation switching and dynamics processing without having to leave the Notation Editor. It helps bridge the gap between musical notation software workflow and DAW-based orchestral composition by providing intelligent mapping between notation events (articulation, dynamics, etc.) and MIDI commands. This system is an alternative to Rearticulate for composers who prefer working in the Notation Editor rather than being constantly stuck in the MIDI piano roll. The inspiration for this project came from spending time learning and enjoying using Dorico, and then wishing I could have some of that same functionality and workflow in Reaper's notation editor.</small>
 
-This is normal text.
-
-<small>This should be smaller text.</small>
-<sub>This is subscript (small and low)</sub>
-<sup>This is superscript (small and high)</sup>
-
-This is normal text again.
 
 <img src="./img/dr-odine%201.png" alt="Dr Odine" width="40%"> <img src="./img/dr%20odine%202.png" alt="Dr Odine 2" width="39%">
 
@@ -24,7 +17,7 @@ Run the following background scripts on startup using Amely_Suncroll's [Global S
 
 <img src="./img/startup.jpg" alt="startup" width="40%">
 
-Add the DR_ODINE_ArticMaps PC --> KS (gmem)' and the DR_ODINE_Note Shortener jsfx plugins to each track fx chain before your VSTi. You can set this to the default chain to avoid having to do this everytime:
+Add the DR_ODINE_ArticMaps PC --> KS (gmem)' and the DR_ODINE_Note Shortener .jsfx plugins to each track fx chain before your VSTi. You can set this to the default chain to avoid having to do this everytime:
 
 <img src="./img/jsfx.jpg" alt="startup" width="40%">
 
