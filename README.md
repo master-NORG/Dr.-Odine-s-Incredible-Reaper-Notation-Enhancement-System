@@ -6,7 +6,13 @@
 
 <img src="./img/dr%20odine%203.jpg" alt="Dr Odine" width="70%">
 
-Dr. Odine's Notation Enhancement is both an orchestral template system for REAPER that automates articulation switching and dynamics processing without having to leave the Notation Editor. It helps bridge the gap between musical notation software workflow and DAW-based orchestral composition by providing intelligent mapping between notation events (articulation, dynamics, etc.) and MIDI commands. This serves as a strong alternative to Rearticulate for those of you who prefer working in the Notation Editor rather than being constantly stuck in the MIDI piano roll. The inspiration for this project came from spending time learning and enjoying using Dorico, and then wishing I could have some of that same functionality and workflow in Reaper's notation editor.
+- **Store your articulation maps in the provided ArticMaps.ini file.**
+
+
+
+REAPER that automates articulation switching and dynamics processing without having to leave the Notation Editor. It helps bridge the gap between musical notation software workflow and DAW-based orchestral composition by providing intelligent mapping between notation events (articulation, dynamics, etc.) and MIDI commands. This system is an alternative to Rearticulate for composers who prefer working in the Notation Editor rather than being constantly stuck in the MIDI piano roll.
+
+The inspiration for this project came from spending time learning and enjoying using Dorico, and then wishing I could have some of that same functionality and workflow in Reaper's notation editor.
 
 ## Installation Requirements
 
