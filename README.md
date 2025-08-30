@@ -1,4 +1,4 @@
-## Dr. Odine's Incredible Notation Enhancement System v1.0 <img src="./img/odine.jpg" alt="Odine" width="20%">
+## Dr. Odine's Incredible Notation Enhancement System v1.0   <img src="./img/odine.jpg" alt="Odine" width="5%">
 
 ### Overview
 
