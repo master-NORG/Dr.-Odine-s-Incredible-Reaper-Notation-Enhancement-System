@@ -2,7 +2,9 @@
 
 ### Overview
 
-<small>This package is a comprehensive orchestral template system for REAPER that automates articulation switching and dynamics processing without having to leave the Notation Editor. It helps bridge the gap between musical notation software workflow and DAW-based orchestral composition by providing intelligent mapping between notation events (articulation, dynamics, etc.) and MIDI commands. This system is an alternative to Rearticulate for composers who prefer working in the Notation Editor rather than being constantly stuck in the MIDI piano roll. The inspiration for this project came from spending time learning and enjoying using Dorico, and then wishing I could have some of that same functionality and workflow in Reaper's notation editor.</small>
+<small>This package is a comprehensive system for REAPER that streamlines the application of articulation, dynamics, ornaments, and any other notation markings to tracks, and then automatically translates them to MIDI commands and note playback without the user having to leave the Notation Editor. Users can set up pre-defined mapping so that notation markings will always translate to the correct MIDI commands based on what preset and VSTi is selected for that track. Simply choose your orchestral presets, regardless of the VSTi of your choice (Kontakt, Spitfire, Halion, etc.), and add your notation markings, and then run the action which applies the notation to all midi items on the current track.
+
+This system is an alternative to Rearticulate for composers who prefer working in the **Notation Editor** rather than being constantly stuck in the MIDI piano roll. The inspiration for this project came from spending time learning and enjoying using Dorico, and then wishing I could have some of that same functionality and workflow in Reaper.</small>
 
 
 <img src="./img/dr-odine%201.png" alt="Dr Odine" width="40%"> <img src="./img/dr%20odine%202.png" alt="Dr Odine 2" width="39%">
@@ -21,6 +23,22 @@ Add the DR_ODINE_ArticMaps PC --> KS (gmem)' and the DR_ODINE_Note Shortener .js
 
 <img src="./img/jsfx.jpg" alt="startup" width="40%">
 
+
+This package also includes some scripts that simply make the process of composing the notation editor more streamlined:
+
+- Includes an action that toggles between displaying notation for all tracks, and the track that was either last selected, or set as the input track for midi events (step-input).
+- Action to dot currently seleted notes
+- Selecting a note or notes will move the playback cursor to that position
+- Intelligent automatic track arming --> if all tracks are selected while in the notation editor, only the track that is selected for step-input will be armed
+- Included a modified version of cfillion's step-sequencer replace note script
+
+But wait, there's more!
+
+- I have created a new preset browser since this system relies on creating reaper presets. You can assign a key to the new browser which allows you to select other presets for the currently selected track's VSTi without having to opent the FX Browser
+
+- Staccato and Marcato articulation can now be applied to any VSTi note playback even if it hasn't been configured in the map file.
+- Dynamics, accents, cres/dimi will be applied to note velocity to any MIDI item, even if it hasn't been configured in the map file.
+- There is an included alternate delete action which will automatically move the playback cursor to where the notes began, (you'll see in the demo video why this is very useful!)
 
 
 ## Installation Requirements
