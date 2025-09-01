@@ -1,0 +1,138 @@
+// @description DR_ODINE_Unmapped Note Shortener
+// @author DR_ODINE
+// @version 1.0
+// @provides [effect] DR_ODINE_Unmapped Note Shortener.jsfx
+// @about
+//   # DR_ODINE_Unmapped Note Shortener
+//   
+//   Shortens note lengths based on CC119 articulation markers.
+//   Handles note aliasing issues with proper note-off management.
+//   Prevents stuck notes when disabled and tracks scheduled offs across blocks.
+
+desc:DR_ODINE_Unmapped Note Shortener
+slider1:150<5,2000,1> Staccato Length (ms)
+slider2:300<5,2000,1> Marcato Length (ms)
+
+// slider10:0<0,999999,1> Offs sent (count)
+slider11:0<0,15,1> Last Off Ch
+slider12:0<0,127,1> Last Off Note
+// slider13:0<0,200000,1> Using length (samples)
+
+slider17:1<0,1,1{Off,On}> Enable Shortening
+
+in_pin:none
+out_pin:none
+
+@init
+  BUFSIZE = 16 * 128;   // 2048 = 16 MIDI chans * 128 notes
+
+  // Allocate non-overlapping array regions
+  rem = 0;              // base pointer for scheduled-off remaining samples
+  shortf = rem + BUFSIZE; // base pointer for "was shortened" flags
+
+  // Initialize both regions
+  i = 0;
+  while (i < BUFSIZE) (
+    rem[i] = -1;        // -1 = no scheduled off
+    shortf[i] = 0;      // 0 = note wasn't shortened
+    i += 1;
+  );
+
+  cc119 = 0;            // articulation latch (0 = none, 1 = staccato, 2 = marcato)
+
+  function SEND_OFF(ofs, ch, n) (
+    // clamp offset to current block
+    ofs = max(0, min(ofs, max(0, samplesblock - 1)));
+    // Belt & suspenders: Note On (vel 0) + Note Off
+    midisend(ofs, $x90 | (ch & 15), n & 127, 0);
+    midisend(ofs, $x80 | (ch & 15), n & 127, 0);
+    slider10 += 1; slider11 = ch; slider12 = n;
+    slider_automate(slider10); slider_automate(slider11); slider_automate(slider12);
+  );
+
+  function GET_LENGTH_MS() (
+    cc119 == 1 ? slider1 :
+    cc119 == 2 ? slider2 :
+    -1;
+  );
+
+@block
+  // Always flush scheduled offs so toggling the effect off doesn't strand notes.
+  i = 0;
+  while (i < BUFSIZE) (
+    r = rem[i];
+    (r >= 0) ? (
+      (samplesblock > 0 && r < samplesblock) ? (
+        ch = floor(i / 128);
+        n  = i % 128;
+        SEND_OFF(r, ch, n);
+        rem[i] = -1;
+        shortf[i] = 2; // our off was sent; swallow any late natural off for this note id
+      ) : (
+        // subtract whole block when host is running; if samplesblock==0, leave r as-is
+        (samplesblock > 0) ? ( rem[i] = r - samplesblock; );
+      );
+    );
+    i += 1;
+  );
+
+  // If disabled, don't drain/consume MIDI — let REAPER pass it through transparently.
+  (slider17 == 1) ? (
+
+    lenS1 = max(1, floor(slider1 * srate / 1000));
+    lenS2 = max(1, floor(slider2 * srate / 1000));
+    slider13 = cc119 == 1 ? lenS1 : (cc119 == 2 ? lenS2 : 0);
+    slider_automate(slider13);
+
+    while (midirecv(offset, m1, m2, m3)) (
+      st = m1 & $xF0;
+      ch = m1 & 15;
+      n  = m2 & 127;
+      v  = m3 & 127;
+      id = ch*128 + n;
+
+      // Swallow CC119 (artic control) but update latch
+      (st == $xB0 && n == 119) ? ( cc119 = v; continue; );
+
+      noteOn  = (st == $x90) && (v > 0);
+      noteOff = (st == $x80) || ((st == $x90) && (v == 0));
+
+      // Decide shortening ONLY at note-on time; offs depend on whether we shortened that specific note.
+      lengthMs = GET_LENGTH_MS();
+
+      noteOn ? (
+        // If a previous shortened note on this id is still pending, close it just before retrigger.
+        (rem[id] >= 0) ? (
+          SEND_OFF(max(0, offset - 1), ch, n);
+          rem[id] = -1;
+          shortf[id] = 0;
+        );
+
+        (lengthMs >= 0) ? (
+          // Shorten this note
+          midisend(offset, m1, m2, m3);
+          when = offset + floor(lengthMs * srate / 1000);
+          (samplesblock > 0 && when < samplesblock) ? (
+            SEND_OFF(when, ch, n);
+            shortf[id] = 2; // off sent within this block; swallow natural off later
+          ) : (
+            rem[id] = when - samplesblock; // may be >=0; will be flushed across blocks
+            shortf[id] = 1; // pending scheduled off across blocks
+          );
+        ) : (
+          // No shortening for this note; mark & pass through
+          shortf[id] = 0;
+          midisend(offset, m1, m2, m3);
+        );
+
+      ) : (
+        noteOff ? (
+          // Pass natural offs ONLY if we did NOT shorten this note when it began.
+          (shortf[id] != 0) ? ( 0; ) : ( midisend(offset, m1, m2, m3); );
+        ) : (
+          // Other MIDI: pass through
+          midisend(offset, m1, m2, m3);
+        );
+      );
+    );
+  );

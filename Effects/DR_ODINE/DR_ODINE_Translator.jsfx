@@ -1,0 +1,280 @@
+// @description DR_ODINE_Translator
+// @author DR_ODINE
+// @version 1.0
+// @provides [effect] DR_ODINE_Translator.jsfx
+// @about
+//   # DR_ODINE_Translator
+//   
+//   Converts Program Change messages to Key Switch notes or CCs based on loaded maps.
+//   Features mapped and unmapped modes with automatic switching via AutoSwitcher.lua.
+//   Uses shared memory (gmem) to store mapping configurations with UI display.
+
+desc:DR_ODINE_Translator
+options:gmem=DR_ODINE_Maps
+
+// ====== Sliders ======
+slider1:0<0,31,1> Map Slot
+slider2:0<0,1,1{Block,Pass}> PC passthrough
+slider3:0<0,1,1{Ignore,Allow}> Retrigger same PC
+slider4:1<0,1,1{From PC,Map default}> Output channel mode
+slider5:250<1,2000,1> KS length (ms)
+
+// status (read-only)
+slider6:0<0,127,1> Last PC
+slider7:0<0,3,1{off,note,cc,pc}> Last Type
+slider8:0<0,127,1> Last KS Note On
+slider9:0<0,127,1> Last KS Note Off
+slider10:0<0,1,1{No,Yes}> Map Loaded
+
+// UNMAPPED control (AutoSwitcher sets this)
+slider11:0<0,1,1{No,Yes}> Unmapped Mode
+
+// Peek (reads map table directly)
+// slider12:1<0,127,1> Peek PC
+// slider13:0<0,3,1{off,note,cc,pc}> Peek Type (loaded)
+// slider14:0<0,127,1> Peek P1 (loaded)
+
+// Unmapped note shaping (CC119 stamps -> next Note On length)
+// slider15:120<10,1000,1> Stacc Len (ms)
+// slider16:250<20,2000,1> Marcato Len (ms)
+
+in_pin:none
+out_pin:none
+
+// ====== Constants ======
+@init
+  BLOCK = 1024;
+  TITLE_OFF = 650;     // base+650 = title length, then ASCII bytes
+  MAGIC = 0xA17C;
+
+  def_ch = 1;          // 1..16 (map default)
+  def_len_ms = 30;
+
+  cur_base = -1; cur_commit = -1; cur_ver = -1;
+  force_reload = 1;
+  title_len = 0;
+
+  // MAPPED mode: single pending KS note-off (per conversion event)
+  pend_note = -1; pend_chan = 0; pend_left = 0;
+
+  // UNMAPPED mode: per-channel last stamp + pending shortened offs
+  i=0; loop(16,
+    last_stamp[i]=0;        // 0=None, 1=Staccato, 2=Marcato
+    pend_note_ch[i]=-1;
+    pend_left_ch[i]=0;
+    last_pc[i]=-1;          // last seen PC per incoming channel
+    i+=1;
+  );
+
+  STAMP_CC = 119;           // CC used by the Lua fallback to tag stacc/marc
+  STAMP_STACC = 1;
+  STAMP_MARC  = 2;
+
+  // ------- small helper: reload current slot if gmem changed -------
+  function reload_if_needed() (
+    base   = slider1 * BLOCK;
+    commit = gmem[base+2];
+    ver    = gmem[base+1];
+
+    need = force_reload || (base != cur_base) || (commit != cur_commit) || (ver != cur_ver);
+    need ? (
+      force_reload = 0;
+      cur_base = base; cur_commit = commit; cur_ver = ver;
+
+      magic = gmem[base+0];
+      slider10 = 0; slider_automate(slider10);
+      def_ch = 1; def_len_ms = 30; title_len = 0;
+
+      (magic == MAGIC) && (commit == 1) ? (
+        def_ch     = max(1, min(16, (gmem[base+3])|0));
+        def_len_ms = max(1,        (gmem[base+4])|0);
+        tl = (gmem[base+TITLE_OFF])|0;
+        title_len = (tl >= 0 && tl <= (BLOCK-(TITLE_OFF+1))) ? tl : 0;
+        slider10 = 1; slider_automate(slider10);
+      );
+    );
+  );
+
+// any UI change forces re-read of slot
+@slider
+  force_reload = 1;
+
+@block
+  reload_if_needed();
+
+  // If Unmapped Mode is on, force PC passthrough (safety)
+  unmapped = slider11|0;
+  unmapped ? ( slider2 = 1; slider_automate(slider2); );
+
+  // --- Service pending mapped KS note-off (single) ---
+  (pend_left > 0) ? (
+    (pend_left <= samplesblock) ? (
+      ofs = max(0, pend_left-1);
+      midisend(ofs, (0x90 | (pend_chan & 0x0F)), pend_note & 0x7F, 0);
+      slider9 = pend_note & 0x7F; slider_automate(slider9);
+      pend_left = 0; pend_note = -1;
+    ) : (
+      pend_left -= samplesblock;
+    );
+  );
+
+  // --- Service pending UNMAPPED shortened offs (per channel) ---
+  i=0; loop(16,
+    (pend_left_ch[i] > 0) ? (
+      (pend_left_ch[i] <= samplesblock) ? (
+        ofs = max(0, pend_left_ch[i]-1);
+        midisend(ofs, (0x90 | i), pend_note_ch[i] & 0x7F, 0);
+        pend_left_ch[i]=0; pend_note_ch[i]=-1;
+      ) : (
+        pend_left_ch[i] -= samplesblock;
+      );
+    );
+    i+=1;
+  );
+
+  // --- Live peek (reads selected PC row from the loaded map) ---
+  base = slider1 * BLOCK;
+  pptr = base + 10 + (slider12|0)*5;
+  slider13 = (gmem[pptr+0])|0;  // type: 0=off,1=note,2=cc,3=pc
+  slider14 = (gmem[pptr+1])|0;  // p1: note/cc/pc number
+  slider_automate(slider13); slider_automate(slider14);
+
+  // --- Main MIDI loop ---
+  while ( midirecv(offset, m1, m2, m3) ?
+  (
+    st = m1 & 0xF0;
+    ch_in = m1 & 0x0F;
+
+    // ===================== UNMAPPED MODE =====================
+    unmapped ? (
+      // 1) Read CC119 stamps and pass them through (or drop if you prefer)
+      (st == 0xB0) && (m2 == STAMP_CC) ? (
+        last_stamp[ch_in] = (m3 == STAMP_STACC) ? 1 : (m3 == STAMP_MARC ? 2 : 0);
+        midisend(offset, m1, m2, m3);
+      ) :
+
+      // 2) PCs: passthrough only (no conversion)
+      (st == 0xC0) ? (
+        midisend(offset, m1, m2, m3);
+      ) :
+
+      // 3) Shorten next Note On after a stamp on this channel
+      (st == 0x90) && (m3 > 0) ? (
+        midisend(offset, m1, m2, m3);
+        (last_stamp[ch_in] > 0) ? (
+          ms = (last_stamp[ch_in] == 1) ? slider15 : slider16;
+          ticks = max(1, floor(ms * srate / 1000));
+          // cancel any previously armed shortened off on this channel
+          (pend_left_ch[ch_in] > 0) ? (
+            pre_ofs = (offset > 0) ? (offset-1) : offset;
+            midisend(pre_ofs, (0x90 | ch_in), pend_note_ch[ch_in] & 0x7F, 0);
+          );
+          pend_note_ch[ch_in] = m2 & 0x7F;
+          pend_left_ch[ch_in] = ticks;
+          last_stamp[ch_in] = 0; // one-shot
+        );
+      ) :
+
+      // all other messages: pass through
+      (
+        midisend(offset, m1, m2, m3);
+      );
+
+    ) : (
+
+    // ===================== MAPPED MODE =====================
+      (st == 0xC0) ? ( // Program Change
+        pc = m2 & 0x7F;
+
+        // optional passthrough copy
+        slider2 ? midisend(offset, m1, m2, m3);
+
+        trig = slider3 || (pc != last_pc[ch_in]); // Allow retrigger? else only on change
+        last_pc[ch_in] = pc;
+
+        trig ? (
+          ptr  = base + 10 + pc*5;
+          typ  = (gmem[ptr+0])|0; // 0=off,1=note,2=cc,3=pc
+          p1   = (gmem[ptr+1])|0; // note/cc/pc #
+          p2   = (gmem[ptr+2])|0; // vel/val (0 => default 127 for notes)
+          pch  = (gmem[ptr+3])|0; // 1..16 or 0 (inherit)
+          plen = (gmem[ptr+4])|0; // ms (0 => def)
+
+          out_ch = pch > 0 ? (pch-1) : (slider4 ? (def_ch-1) : ch_in);
+          ks_ms  = slider5 > 0 ? slider5 : (plen > 0 ? plen : def_len_ms);
+
+          slider6 = pc; slider7 = typ; slider_automate(slider6); slider_automate(slider7);
+
+          (typ == 1) ? ( // NOTE keyswitch
+            note = p1 & 0x7F;
+            vel  = (p2 > 0 ? p2 : 127) & 0x7F;
+
+            // cancel any armed mapped KS-off on this output channel
+            (pend_left > 0) && ((pend_chan & 0x0F) == out_ch) ? (
+              pre_ofs = (offset > 0) ? (offset - 1) : offset;
+              midisend(pre_ofs, (0x90 | out_ch), pend_note & 0x7F, 0);
+              pend_left = 0; pend_note = -1;
+            );
+
+            // send KS ON
+            midisend(offset, (0x90 | out_ch), note, vel);
+            slider8 = note; slider_automate(slider8);
+
+            // arm exact KS OFF timer
+            pend_chan = out_ch;
+            pend_note = note;
+            pend_left = max(1, floor(ks_ms * srate / 1000));
+          );
+
+          (typ == 2) ? ( // CC
+            midisend(offset, (0xB0 | out_ch), p1 & 0x7F, p2 & 0x7F);
+          );
+
+          (typ == 3) ? ( // Program Change passthrough to chosen out channel
+            midisend(offset, (0xC0 | out_ch), p1 & 0x7F, 0);
+          );
+
+          // typ==0 => off (do nothing)
+        );
+      ) : (
+        // non-PC data: pass through unchanged
+        midisend(offset, m1, m2, m3);
+      )
+    );
+  ); );
+
+// ===================== @gfx: Small UI with Map Title =====================
+@gfx 240 86
+  gfx_set(0,0,0,1); gfx_rect(0,0,gfx_w,gfx_h,1); // bg
+  gfx_set(1,1,1,1);
+
+  gfx_x = 10; gfx_y = 10;
+  gfx_drawstr("DR_ODINE_Translator");
+
+  gfx_y += 18; gfx_x = 10;
+  gfx_drawstr("Map: ");
+  base = slider1 * BLOCK;
+
+  (slider10 == 1 && title_len > 0) ? (
+    i=0;
+    loop(title_len,
+      ch = (gmem[base + TITLE_OFF + 1 + i]) | 0;
+      (ch < 32 || ch > 126) ? ( ch = 32; );
+      gfx_drawchar(ch);
+      i += 1;
+    );
+  ) : (
+    gfx_drawstr("(unknown / legacy)")
+  );
+
+  gfx_y += 18; gfx_x = 10;
+  gfx_drawstr("Slot: ");
+  sn = slider1|0;
+  hundreds = floor(sn/100); tens = floor((sn%100)/10); ones = sn%10;
+  (hundreds>0) ? (gfx_drawchar(48+hundreds););
+  (hundreds>0 || tens>0) ? (gfx_drawchar(48+tens););
+  gfx_drawchar(48+ones);
+
+  gfx_y += 18; gfx_x = 10;
+  gfx_drawstr("Unmapped: ");
+  gfx_drawstr(slider11 ? "Yes" : "No");
