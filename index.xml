@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<index version="1" commit="435bd37394f397293f8755cdedcbf032277f6a89">
+  <category name="Effects/DR_ODINE">
+    <reapack name="DR_ODINE_Translator.jsfx" type="effect" desc="DR_ODINE_Translator">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel0 \b \fs36 DR_ODINE_Translator\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Converts Program Change messages to Key Switch notes or CCs based on loaded maps. Features mapped and unmapped modes with automatic switching via AutoSwitcher.lua. Uses shared memory (gmem) to store mapping configurations with UI display.\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0" author="DR_ODINE" time="2025-09-01T00:44:32Z">
+        <source type="effect">https://github.com/master-NORG/Dr.-Odine-s-Incredible-Reaper-Notation-Enhancement-System/raw/435bd37394f397293f8755cdedcbf032277f6a89/Effects/DR_ODINE/DR_ODINE_Translator.jsfx</source>
+      </version>
+    </reapack>
+    <reapack name="DR_ODINE_Unmapped Note Shortener.jsfx" type="effect" desc="DR_ODINE_Unmapped Note Shortener">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel0 \b \fs36 DR_ODINE_Unmapped Note Shortener\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Shortens note lengths based on CC119 articulation markers. Handles note aliasing issues with proper note-off management. Prevents stuck notes when disabled and tracks scheduled offs across blocks.\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0" author="DR_ODINE" time="2025-09-01T00:44:32Z">
+        <source type="effect">https://github.com/master-NORG/Dr.-Odine-s-Incredible-Reaper-Notation-Enhancement-System/raw/435bd37394f397293f8755cdedcbf032277f6a89/Effects/DR_ODINE/DR_ODINE_Unmapped%20Note%20Shortener.jsfx</source>
+      </version>
+    </reapack>
+  </category>
+  <category name="Scripts/DR_ODINE">
+    <reapack name="DR_ODINE_ApplyNotation.lua" type="script" desc="DR_ODINE_Articulation &amp; Dynamics to PC &amp; CC1">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel0 \b \fs36 Articulation & Dynamics to PC & CC1\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Main articulation processor. Converts text events to Program Changes and CC1 dynamics. Supports mapped/unmapped modes, crescendo/diminuendo, and accent handling.\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0" author="DR_ODINE" time="2025-09-01T00:44:32Z">
+        <source main="main">https://github.com/master-NORG/Dr.-Odine-s-Incredible-Reaper-Notation-Enhancement-System/raw/435bd37394f397293f8755cdedcbf032277f6a89/Scripts/DR_ODINE/DR_ODINE_ApplyNotation.lua</source>
+      </version>
+    </reapack>
+    <reapack name="DR_ODINE_Auto-Arm Track (Background).lua" type="script" desc="DR_ODINE_Auto-Arm Track (Background)">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel0 \b \fs36 Auto-Arm Track (Background)\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Continuously monitors track selection and manages record-arming. Single track selected: arms that track, disarms all others. Multiple tracks selected: checks MIDI editor note input track, arms only that one.\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0" author="DR_ODINE" time="2025-09-01T00:44:32Z">
+        <source main="main">https://github.com/master-NORG/Dr.-Odine-s-Incredible-Reaper-Notation-Enhancement-System/raw/435bd37394f397293f8755cdedcbf032277f6a89/Scripts/DR_ODINE/DR_ODINE_Auto-Arm%20Track%20(Background).lua</source>
+      </version>
+    </reapack>
+    <reapack name="DR_ODINE_AutoSwitcher (Background).lua" type="script" desc="DR_ODINE_AutoSwitcher">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel0 \b \fs36 DR_ODINE_AutoSwitcher\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Automatically switches between mapped and unmapped modes based on instrument presets. Monitors tracks for preset changes and configures Dr_ODINE Notation Translator JSFX accordingly.\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0" author="DR_ODINE" time="2025-09-01T00:44:32Z">
+        <source main="main">https://github.com/master-NORG/Dr.-Odine-s-Incredible-Reaper-Notation-Enhancement-System/raw/435bd37394f397293f8755cdedcbf032277f6a89/Scripts/DR_ODINE/DR_ODINE_AutoSwitcher%20(Background).lua</source>
+      </version>
+    </reapack>
+    <reapack name="DR_ODINE_Cursor to Selection (Background).lua" type="script" desc="DR_ODINE_MIDI Note Selection Cursor Sync (Background)">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel0 \b \fs36 MIDI Note Selection Cursor Sync\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Moves cursor to the start position of selected MIDI notes. Runs in background with step-input detection.\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0" author="DR_ODINE" time="2025-09-01T00:44:32Z">
+        <source main="main">https://github.com/master-NORG/Dr.-Odine-s-Incredible-Reaper-Notation-Enhancement-System/raw/435bd37394f397293f8755cdedcbf032277f6a89/Scripts/DR_ODINE/DR_ODINE_Cursor%20to%20Selection%20(Background).lua</source>
+      </version>
+    </reapack>
+    <reapack name="DR_ODINE_Dynamics to Velocity (All).lua" type="script" desc="DR_ODINE_Dynamics to Velocity (All Notes)">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel0 \b \fs36 Dynamics to Velocity (All Notes)\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Applies dynamics text events to all MIDI note velocities. Supports crescendo/diminuendo and accent processing.\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0" author="DR_ODINE" time="2025-09-01T00:44:32Z">
+        <source main="main">https://github.com/master-NORG/Dr.-Odine-s-Incredible-Reaper-Notation-Enhancement-System/raw/435bd37394f397293f8755cdedcbf032277f6a89/Scripts/DR_ODINE/DR_ODINE_Dynamics%20to%20Velocity%20(All).lua</source>
+      </version>
+    </reapack>
+    <reapack name="DR_ODINE_Dynamics to Velocity (Selected Notes).lua" type="script" desc="DR_ODINE_Dynamics to Velocity (Selected Notes)">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel0 \b \fs36 Dynamics to Velocity (Selected Notes)\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Applies dynamics text events to selected MIDI note velocities only.\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0" author="DR_ODINE" time="2025-09-01T00:44:32Z">
+        <source main="main">https://github.com/master-NORG/Dr.-Odine-s-Incredible-Reaper-Notation-Enhancement-System/raw/435bd37394f397293f8755cdedcbf032277f6a89/Scripts/DR_ODINE/DR_ODINE_Dynamics%20to%20Velocity%20(Selected%20Notes).lua</source>
+      </version>
+    </reapack>
+    <reapack name="DR_ODINE_Loader.lua" type="script" desc="DR_ODINE_Loader">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel0 \b \fs36 DR_ODINE Loader\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Preloads all maps to gmem and writes slots registry. Run this first to initialize the ArticMaps system.\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0" author="DR_ODINE" time="2025-09-01T00:44:32Z">
+        <source type="data" file="DR_ODINE Maps/DR_ODINE_Maps.ini">https://github.com/master-NORG/Dr.-Odine-s-Incredible-Reaper-Notation-Enhancement-System/raw/435bd37394f397293f8755cdedcbf032277f6a89/Scripts/DR_ODINE/DR_ODINE_Maps.ini</source>
+        <source main="main">https://github.com/master-NORG/Dr.-Odine-s-Incredible-Reaper-Notation-Enhancement-System/raw/435bd37394f397293f8755cdedcbf032277f6a89/Scripts/DR_ODINE/DR_ODINE_Loader.lua</source>
+      </version>
+    </reapack>
+    <reapack name="DR_ODINE_Preset Browser.lua" type="script" desc="DR_ODINE_VSTi Preset Browser">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel0 \b \fs36 DR_ODINE_VSTi Preset Browser\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Scrollable, searchable preset browser for any VSTi with saved REAPER presets.\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0" author="DR_ODINE" time="2025-09-01T00:44:32Z">
+        <source main="main">https://github.com/master-NORG/Dr.-Odine-s-Incredible-Reaper-Notation-Enhancement-System/raw/435bd37394f397293f8755cdedcbf032277f6a89/Scripts/DR_ODINE/DR_ODINE_Preset%20Browser.lua</source>
+      </version>
+    </reapack>
+    <reapack name="DR_ODINE_Toggle All_Target Track.lua" type="script" desc="DR_ODINE_Smart MIDI Track Selector">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel0 \b \fs36 DR_ODINE_Smart MIDI Track Selector\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Toggles between all tracks selected and MIDI editor target track only.\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0" author="DR_ODINE" time="2025-09-01T00:44:32Z">
+        <source main="main">https://github.com/master-NORG/Dr.-Odine-s-Incredible-Reaper-Notation-Enhancement-System/raw/435bd37394f397293f8755cdedcbf032277f6a89/Scripts/DR_ODINE/DR_ODINE_Toggle%20All_Target%20Track.lua</source>
+      </version>
+    </reapack>
+  </category>
+  <category name="Scripts/MIDI Editor">
+    <reapack name="DR_ODINE_Delete and Move Playback.lua" type="script" desc="DR_ODINE_Delete Selected MIDI Notes and Move Cursor">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel0 \b \fs36 Delete Selected MIDI Notes and Move Cursor\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Deletes selected MIDI notes and moves cursor to first note position.\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0" author="DR_ODINE" time="2025-09-01T00:44:32Z">
+        <source main="midi_editor">https://github.com/master-NORG/Dr.-Odine-s-Incredible-Reaper-Notation-Enhancement-System/raw/435bd37394f397293f8755cdedcbf032277f6a89/Scripts/MIDI%20Editor/DR_ODINE_Delete%20and%20Move%20Playback.lua</source>
+      </version>
+    </reapack>
+    <reapack name="DR_ODINE_dotted_notes.lua" type="script" desc="DR_ODINE_Dot Selected Notes">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel0 \b \fs36 Dot Selected Notes\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Makes selected MIDI notes dotted (increases length by 50%).\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0" author="DR_ODINE" time="2025-09-01T00:44:32Z">
+        <source main="midi_editor">https://github.com/master-NORG/Dr.-Odine-s-Incredible-Reaper-Notation-Enhancement-System/raw/435bd37394f397293f8755cdedcbf032277f6a89/Scripts/MIDI%20Editor/DR_ODINE_dotted_notes.lua</source>
+      </version>
+    </reapack>
+    <reapack name="DR_ODINE_Step sequencing (replace mode).lua" type="script" desc="DR_ODINE_Step sequencing (replace mode)">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel1 \b \fs32 Step sequencing (replace mode)\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This script is an alternative to the native step recording feature. Existing notes under the edit cursor are replaced (lowest first). The MIDI editor's active note row is updated as new notes are played.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 An options action is provided to individually toggle replacing channel/pitch/velocity and skipping unselected notes.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Note that this script automatically inserts and removes an helper JSFX in the active track's input FX chain in order to receive live MIDI input.\par}
+}
+]]></description>
+        <link rel="screenshot" href="https://i.imgur.com/4azf7CN.gif">Inserting and replacing notes</link>
+        <link rel="screenshot" href="https://i.imgur.com/YFHLRWM.png">Options menu</link>
+        <link rel="donation">https://reapack.com/donate</link>
+      </metadata>
+      <version name="1.1.4" author="cfillion, modified by DR_ODINE" time="2025-09-01T00:44:32Z">
+        <source main="midi_editor">https://github.com/master-NORG/Dr.-Odine-s-Incredible-Reaper-Notation-Enhancement-System/raw/435bd37394f397293f8755cdedcbf032277f6a89/Scripts/MIDI%20Editor/DR_ODINE_Step%20sequencing%20(replace%20mode).lua</source>
+      </version>
+    </reapack>
+  </category>
+</index>
